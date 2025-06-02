@@ -1,0 +1,133 @@
+[30-05-2025 22:00] Amogh KLE IT: 
+from sklearn.datasets import load_iris
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+
+# Load iris dataset,oliver can also be applied, breast cancer
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Create and train KNN classifier
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+
+print("Predicted labels:", y_pred, "True labels:", y_test)
+# Test accuracy
+accuracy = knn.score(X_test, y_test)
+print("Test accuracy:", accuracy)
+[30-05-2025 22:00] Amogh KLE IT: import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# Load the zoo dataset
+df = pd.read_csv('zoo.csv')
+d=df.info()
+head=df.head()
+head
+# Assume the last column is the class label
+X = df.iloc[:, :-1]
+y = df.iloc[:, -1]
+
+# Convert categorical features to numeric
+X_encoded = pd.get_dummies(X)
+
+# Fit ID3 (DecisionTreeClassifier with entropy)
+clf = DecisionTreeClassifier(criterion='entropy', random_state=42)
+clf.fit(X_encoded, y)
+
+# Predict on the training data (for demonstration)
+y_pred = clf.predict(X_encoded)
+accuracy = (y_pred == y).mean()
+print("Training accuracy:", accuracy)
+
+# Plot the tree
+plt.figure(figsize=(16, 8))
+plot_tree(clf, feature_names=X_encoded.columns, class_names=[str(c) for c in set(y)], filled=True)
+plt.title("ID3 Decision Tree for zoo.csv")
+plt.show()
+
+[30-05-2025 22:00]
+Amogh KLE IT:
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import fetch_california_housing
+# Generate a synthetic linear dataset ,boston california
+
+# X = np.linspace(0, 10, 100)
+# y = 2 * X + 1 + np.random.randn(100)  # y = 2x + 1 + noise
+# X = X.reshape(-1, 1)
+
+
+# california
+data = fetch_california_housing()
+X = data.data
+y = data.target
+
+# Split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+
+# Fit Linear Regression
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+
+# Plot results
+# plt.scatter(X_train, y_train, color='blue', label='Train')
+# plt.scatter(X_test, y_test, color='red', label='Test')
+plt.plot(X_test, y_pred, color='green', label='Linear Regression Prediction')
+plt.title('Linear Regression on Synthetic Data')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+print("Model Coefficient (slope):", lr.coef_[0])
+print("Model Intercept:", lr.intercept_)
+print("Test R^2 Score:", lr.score(X_test, y_test))
+
+
+ Amogh KLE IT: import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# Generate a synthetic nonlinear dataset
+np.random.seed(0)
+X = np.linspace(0, 10, 100)
+y = 0.5 * X**2 - X + 2 + np.random.randn(100)  # Quadratic relationship with noise
+X = X.reshape(-1, 1)
+
+# Split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Transform features to polynomial features (degree 2)
+poly = PolynomialFeatures(degree=2)
+X_train_poly = poly.fit_transform(X_train)
+X_test_poly = poly.transform(X_test)
+
+# Fit Polynomial Regression
+model = LinearRegression()
+model.fit(X_train_poly, y_train)
+y_pred = model.predict(X_test_poly)
+
+# Plot results
+plt.scatter(X_train, y_train, color='blue', label='Train')
+plt.scatter(X_test, y_test, color='red', label='Test')
+plt.scatter(X_test, y_pred, color='green', label='Polynomial Regression Prediction', marker='x')
+plt.title('Polynomial Regression (Degree 2) on Synthetic Data')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+print("Model Coefficients:", model.coef_)
+print("Model Intercept:", model.intercept_)
+print("Test R^2 Score:", model.score(X_test_poly, y_test))
