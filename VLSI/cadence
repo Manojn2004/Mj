@@ -43,3 +43,16 @@ Analysis - dc - component parameter - select component  - vpulse
 output - setup - from design - selet o/p n i/p wires
 Netlish n run 
 click - split all strips
+
+Layout 
+
+csh
+source /home/install/cshrc
+virtuoso&
+file - open - inverter_180(lib) - inv(cell) choose schematic
+launch layoutXL - create new - automatic
+connectivity - generate - all from sourch - in boundary
+S - streach
+connectivity - generate - place as in schematic
+connectivity - incomplete nets - hide/show all
+select each mos n press Q - parameter - body type detached
