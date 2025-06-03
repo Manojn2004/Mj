@@ -1,1 +1,45 @@
+csh
+source /home/install/cshrc
+gedit alu.v
+ncverilog alu.v
+gedit alu_tb.v
+ncverilog alu_tb.v
+nclaunch -new 
+single step run(Double click to get blue)
+Launch IRUN with current selection
++ testbench file
+send to target waveform
+RUN
 
+inputconstraint.sdc, rcscript.tcl & .V file
+genus
+source rcscript.tcl
+new window - schematic view
+
+ANALOG
+
+csh
+source /home/install/cshrc
+virtuoso&
+file - new - library - inverter_180(library) - attach to gpdk180
+file - cell view - select inverter_180(lib) - inv(cell name)
+Press I - gpdk180(lib) - pmos(cell) - spectre(view) - Length - Width
+Press I - gpdk180(lib) - nmos(cell) - spectre(view) - Length - Width
+Press P - Vdd, Vss, Vin (for Input), Vout(for output)
+Press W to wire
+Go to log file - new - cell view - inverter_180(lib) - inv1(cell)
+Press create - cell view - From cell view (browse) - inverter_180(lib) - inv(cell)
+left pin - Vin, R pin - Vout, Top - Vdd, Bottom - Vss
+edit the shape - check n save
+go to log - file - new cell view - inverter_180(lib) - inv2(cell)
+Press I - inverter_180 browse inv(cell) symbol
+Prss I - Analoglib - Vdc, Vpulse, Gnd, Cap
+check and save
+Launch ADEL
+Setup - Simulator - OK
+Setup - modal libraries - NN
+Analysis - tran 
+Analysis - dc - component parameter - select component  - vpulse 
+output - setup - from design - selet o/p n i/p wires
+Netlish n run 
+click - split all strips
